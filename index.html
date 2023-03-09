@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聚合搜索引擎</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+        *{font-family:微软雅黑, Arial, sans-serif;
+        outline: none;}
+        .clear{clear: both;}
+        .flex{display: inline-flex;overflow:hidden;}
+        .flex img{height: 72px;width: 100%;}
+        .wrap{max-width:1000px;margin:0 auto;}
+        .search-wrapper{float:right;width:78%;height:70px;}
+        .search-wrapper ol{ list-style: none; margin: 0;padding: 0;}
+        .search-wrapper ol li{display:inline-block;padding:5px;}
+        .search-wrapper ol li:hover{background-color: #cbcbcb;border-radius: 5px;}
+        .search-wrapper li.on{background-color: #cbcbcb;border-radius: 5px;}
+        .search-wrapper a:link{color: #383939;text-decoration: none;}
+        .search-wrapper .icon{display:inline-flex;  vertical-align: middle; }
+        .search-wrapper span{vertical-align: middle; }
+        .search-wrapper ol li span{display:inline-flex}
+        .search-li-logo {display: inline-flex;vertical-align: middle;}
+        .search-li-logo img {    border: none;    max-width: 100%;z-index: 999; }
+        .search-form-wrap{margin-top:4px;margin-left:5px;align-items: end;}
+        .search-wrapper input{font-size: 16px;
+            padding: 5px 126px 5px 30px ;
+            color: #222;
+            background: hsla(0,0%,100%,.5);
+            border: 1px solid #4033f7;
+            vertical-align: middle;
+            box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+            border-radius: 2px;
+            margin-left: -30px;
+            line-height: 22px;
+            width: 74%;
+            position: relative;
+         }
+         .search-wrapper input:focus{outline:none;}
+         .search-wrapper button{
+            cursor: pointer;
+            color: #4f5154;
+            line-height: 30px;
+            background-color: hsla(0,0%,94.9%,.6);
+            text-shadow: 0 1px 0 #fff;
+            border: 1px solid #ccd8e1;
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+            margin-left: -5px;
+         }
+        .search-wrapper button:hover{box-shadow:blue;}
+        .autocomplete-items{
+        left:500px;
+        }
+    </style>
+    <script>
+        var searchbar = null;
+       $(document).ready(function(){
+
+            $(".search-wrapper li").click(function(){
+                $(".search-wrapper li").removeClass("on");
+                $(this).addClass("on");
+                var imgsrc = $(this).find("img").attr("src");
+                //var imgsrc = $(".on img").attr("src");
+                $("#search-li-logo").attr("src",imgsrc);
+                searchbar = $(this).data('key');
+            });
+            //---------------
+            $("#searchbtn").click(function() {
+            var keyword = $("#search-input").val();
+            var baidu = `https://www.baidu.com/s?wd=${keyword}`;
+            var bing = `https://www.bing.com/search?q=${keyword}`;
+            var google = `https://www.google.com/search?q=${keyword}`
+            var googlemap =`https://www.google.com/maps/search/${keyword}`;
+            switch (searchbar){
+                case "baidu":
+                    window.open(baidu,'_blank');
+                    return false;
+                    break;
+                case "google":
+                    window.open(google,'_blank');
+                    return false;
+                    break;
+                case "bing":
+                    window.open(bing,'_blank');
+                    return false;
+                    break;
+                case "googlemap":
+                    window.open(googlemap,'_blank');
+                    return false;
+                    break;
+                default:
+                    window.open(baidu,'_blank');
+                    return false;
+                    break;
+            }
+            });
+
+        });
+    </script>    
+</head>
+<body>
+
+<div class="wrap">
+        <div class="flex"><img src="/images/logo.png"></div>
+        <div class="search-wrapper">
+            <div class="search-nav">
+                <ol id="search-nav-li">
+                    <li data-key="bing">
+                        <a>
+                            <div class="icon">
+                                <img src="/images/bing.svg" width="18" alt="">
+                            </div> 
+                            <span class="text-darker text-ellipsis">Bing</span>
+                        </a>
+                    </li>
+                    <li data-key="google"><a>
+                            <div class="icon"><img src="/images/google.svg" width="18" alt=""></div> <span class="text-darker text-ellipsis">Google</span>
+                        </a></li>
+                    <li data-key="googlemap"><a>
+                            <div class="icon"><img src="/images/googlemap.svg" width="18" alt=""></div> <span class="text-darker text-ellipsis">谷歌地图</span>
+                        </a></li>
+                    <li data-key="baidu" class="on"><a>
+                            <div class="icon"><img src="/images/baidu.svg" width="18" alt=""></div> <span class="text-darker text-ellipsis">百度</span>
+                        </a></li>
+                    <li data-key="baidu"><a>
+                            <div class="icon"><img src="/images/youtube.svg" width="18" alt=""></div> <span class="text-darker text-ellipsis">YouTube</span>
+                        </a></li>
+                    <li data-key="youtube"><a>
+                            <div class="icon"><img src="/images/bilibili.svg" width="18" alt=""></div> <span class="text-darker text-ellipsis">B站</span>
+                        </a></li>
+                    <li data-key="bilibili"><a>
+                            <div class="icon"><img src="/images/taobao.svg" width="18" alt=""></div> <span class="text-darker text-ellipsis">淘宝</span>
+                        </a></li>
+                    <li data-key="taobao"><a>
+                            <div class="icon"><img src="/images/jd.svg" width="18" alt=""></div> <span class="text-darker text-ellipsis">京东</span>
+                        </a></li>
+                    <li data-key="jd"><a>
+                            <div class="icon"><img src="/images/wechat.svg" width="18" alt=""></div> <span class="text-darker text-ellipsis">微信</span>
+                        </a></li>
+                    <li><a>
+                            <div class="icon"><img src="/images/sogou.svg" width="18" alt=""></div> <span class="text-darker text-ellipsis">搜狗</span>
+                        </a></li>
+                    </ol>
+            </div>
+            <div class="search-form-wrap">
+                <form class="engine-form" action="#">
+                    <div class="search-li-logo">
+                        <img id="search-li-logo" width="20" src="/images/baidu.svg">
+                    </div> 
+                    <input id="search-input" type="text"  autocomplete="on" placeholder="输入搜索关键词">
+                    <button id="searchbtn" type="submit"><span>搜 索</span></button>
+                </form>
+            </div>
+
+        </div>
+
+
+</div>
+
+    
+
+
+
+
+</body>
+</html>
